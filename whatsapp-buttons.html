@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Contact Buttons</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .button-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 12px;
+            background: #f8f9fa;
+        }
+
+        .button-section h2 {
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 18px;
+        }
+
+        .button-section p {
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Button Style 1: Basic HTML Button */
+        .basic-button {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-family: inherit;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .basic-button:hover {
+            background-color: #128C7E;
+        }
+
+        .basic-button:focus {
+            outline: 2px solid #25D366;
+            outline-offset: 2px;
+        }
+
+        /* Button Style 2: Modern Styled Button with Icon */
+        .modern-button {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: inherit;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modern-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .modern-button:hover::before {
+            left: 100%;
+        }
+
+        .modern-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .modern-button:active {
+            transform: translateY(0);
+        }
+
+        .modern-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.3);
+        }
+
+        /* WhatsApp Icon */
+        .whatsapp-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Button Style 3: Glassmorphism Design */
+        .glass-button {
+            background: rgba(37, 211, 102, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            color: #25D366;
+            padding: 18px 36px;
+            font-size: 16px;
+            border-radius: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: inherit;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .glass-button:hover {
+            background: rgba(37, 211, 102, 0.2);
+            border-color: rgba(37, 211, 102, 0.5);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.2);
+        }
+
+        .glass-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Button Style 4: Floating Action Button */
+        .fab-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+        }
+
+        .fab-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+        }
+
+        .fab-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.3);
+        }
+
+        .fab-button .whatsapp-icon {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .modern-button,
+            .glass-button {
+                padding: 14px 28px;
+                font-size: 15px;
+            }
+
+            .fab-button {
+                bottom: 20px;
+                right: 20px;
+                width: 56px;
+                height: 56px;
+            }
+
+            .fab-button .whatsapp-icon {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        /* Pulse animation for FAB */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        .fab-button.pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Info section styling */
+        .info-section {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .info-section h3 {
+            color: #2d5a2d;
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            color: #4a6b4a;
+            padding-left: 20px;
+        }
+
+        .info-section li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WhatsApp Contact Button Examples</h1>
+
+        <!-- Button Style 1: Basic HTML Button -->
+        <div class="button-section">
+            <h2>1. Basic HTML Button</h2>
+            <p>Simple, accessible button with hover effects and proper focus states.</p>
+            <a href="http://wa.me/27727089348" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="basic-button"
+               role="button"
+               aria-label="Contact us on WhatsApp">
+                Contact on WhatsApp
+            </a>
+        </div>
+
+        <!-- Button Style 2: Modern Styled Button -->
+        <div class="button-section">
+            <h2>2. Modern Button with Icon</h2>
+            <p>Gradient background, smooth animations, and WhatsApp icon for better visual appeal.</p>
+            <a href="http://wa.me/27727089348" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="modern-button"
+               role="button"
+               aria-label="Start WhatsApp conversation">
+                <svg class="whatsapp-icon" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.386"/>
+                </svg>
+                Start Conversation
+            </a>
+        </div>
+
+        <!-- Button Style 3: Glassmorphism Design -->
+        <div class="button-section">
+            <h2>3. Glassmorphism Button</h2>
+            <p>Modern glass effect with backdrop blur and subtle transparency.</p>
+            <a href="http://wa.me/27727089348" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="glass-button"
+               role="button"
+               aria-label="Message us on WhatsApp">
+                <svg class="whatsapp-icon" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.386"/>
+                </svg>
+                Message Us
+            </a>
+        </div>
+
+        <!-- Information Section -->
+        <div class="info-section">
+            <h3>How WhatsApp Links Work</h3>
+            <ul>
+                <li><strong>Format:</strong> <code>http://wa.me/[country code][phone number]</code></li>
+                <li><strong>Desktop:</strong> Opens WhatsApp Web in browser</li>
+                <li><strong>Mobile:</strong> Opens WhatsApp app directly</li>
+                <li><strong>Accessibility:</strong> All buttons include proper ARIA labels and focus states</li>
+                <li><strong>Security:</strong> Links use <code>target="_blank"</code> and <code>rel="noopener noreferrer"</code></li>
+            </ul>
+
+            <h3>Best Practices for Button Placement</h3>
+            <ul>
+                <li>Place primary WhatsApp button prominently on contact pages</li>
+                <li>Use floating action button (FAB) for persistent access</li>
+                <li>Consider adding to product pages for immediate support</li>
+                <li>Ensure buttons are easily tappable on mobile (minimum 44px)</li>
+                <li>Use consistent styling that matches your brand colors</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Floating Action Button (FAB) -->
+    <a href="http://wa.me/27727089348" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       class="fab-button pulse"
+       role="button"
+       aria-label="Quick WhatsApp contact"
+       title="Contact us on WhatsApp">
+        <svg class="whatsapp-icon" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.893 3.386"/>
+        </svg>
+    </a>
+
+    <script>
+        // Optional: Add click tracking or additional functionality
+        document.querySelectorAll('a[href*="wa.me"]').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Optional: Track button clicks for analytics
+                console.log('WhatsApp button clicked:', this.textContent.trim());
+                
+                // Optional: Add custom pre-filled message
+                // You can modify the href to include a message parameter
+                // Example: http://wa.me/27727089348?text=Hello%20from%20your%20website
+            });
+        });
+
+        // Add pulse animation to FAB after page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelector('.fab-button').classList.add('pulse');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
