@@ -92,6 +92,26 @@ body {
   50% { background-position: 100% 50%; }
 }
 
+/* White Glow Animation */
+@keyframes white-glow {
+  0%, 100% { 
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    opacity: 0.8;
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.3);
+    opacity: 1;
+  }
+}
+
+@keyframes parallax-float {
+  0%, 100% { 
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  50% { 
+    transform: translateY(-8px) rotateX(2deg) rotateY(2deg);
+  }
+}
 /* Utility Classes */
 .animate-float {
   animation: float 4s ease-in-out infinite;
@@ -110,6 +130,17 @@ body {
   animation: gradient-shift 3s ease infinite;
 }
 
+.animate-white-glow {
+  animation: white-glow 3s ease-in-out infinite;
+}
+
+.animate-parallax-float {
+  animation: parallax-float 5s ease-in-out infinite;
+}
+
+.white-glow {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
 /* Glow Text Effect */
 .glow-text {
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3);
@@ -133,6 +164,9 @@ body {
   perspective: 2000px;
 }
 
+.perspective-3000 {
+  perspective: 3000px;
+}
 /* Enhanced 3D Hover Effects */
 .hover\:translateZ-2:hover {
   transform: translateZ(2px);
@@ -142,10 +176,16 @@ body {
   transform: translateZ(5px);
 }
 
+.hover\:translateZ-10:hover {
+  transform: translateZ(10px);
+}
 .hover\:scale-115:hover {
   transform: scale(1.15);
 }
 
+.hover\:scale-120:hover {
+  transform: scale(1.2);
+}
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -198,8 +238,6 @@ input:focus, textarea:focus, button:focus {
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* White Glow Effects */
-
 /* Loading States */
 @keyframes shimmer {
   0% {
@@ -237,6 +275,7 @@ input:focus, textarea:focus, button:focus {
 }
 
 .animate-float-smooth {
+  animation: float-smooth 6s ease-in-out infinite;
 }
 
 /* Typography Enhancements */
@@ -257,19 +296,6 @@ input:focus, textarea:focus, button:focus {
   border-width: 0;
 }
 
-/* Responsive Design Helpers */
-@media (max-width: 768px) {
-  .glass-nav {
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-  }
-  
-  .glass-container {
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-  }
-}
-
 /* Parallax Layers */
 .parallax-slow {
   transform: translateZ(-100px) scale(1.1);
@@ -278,7 +304,6 @@ input:focus, textarea:focus, button:focus {
 .parallax-fast {
   transform: translateZ(50px);
 }
-
 
 /* Performance Optimizations */
 .will-change-transform {
@@ -289,13 +314,22 @@ input:focus, textarea:focus, button:focus {
   will-change: opacity;
 }
 
-/* Dark mode optimizations */
-@media (prefers-color-scheme: dark) {
-  .glass-nav {
-    background: rgba(0, 0, 0, 0.6);
-  }
+/* ===== RESPONSIVE DESIGN BREAKPOINTS ===== */
+
+/* Mobile First Approach - Base styles for mobile (320px+) */
+
+/* Small Mobile Devices (320px - 479px) */
+@media (max-width: 479px) {
+  /* Typography */
+  h1 { font-size: 1.875rem !important; line-height: 2.25rem !important; }
+  h2 { font-size: 2.25rem !important; line-height: 2.5rem !important; }
+  h3 { font-size: 1.5rem !important; line-height: 2rem !important; }
   
-  .glass-container {
-    background: rgba(255, 255, 255, 0.02);
-  }
-}
+  /* Spacing */
+  .container { padding-left: 1rem; padding-right: 1rem; }
+  section { padding-top: 4rem; padding-bottom: 4rem; }
+  
+  /* Navigation */
+  .glass-nav {
+    padding: 0.75rem 1rem;
+    backdrop-filter: blur(10px);
