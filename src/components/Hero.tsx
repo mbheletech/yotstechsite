@@ -1,320 +1,184 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowRight, Smartphone, Zap, Shield } from 'lucide-react';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+const Hero = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const heroRef = useRef<HTMLDivElement>(null);
 
-* {
-  box-sizing: border-box;
-}
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: (e.clientX - rect.left) / rect.width,
+          y: (e.clientY - rect.top) / rect.height,
+        });
+      }
+    };
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-smooth: antialiased;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
-  font-weight: 300;
-}
+    const heroElement = heroRef.current;
+    if (heroElement) {
+      heroElement.addEventListener('mousemove', handleMouseMove);
+      return () => heroElement.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, []);
 
-/* Glassmorphism Components */
-.glass-nav {
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-.glass-container {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+  return (
+    <section 
+      id="home"
+      ref={heroRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black"
+    >
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        {/* Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-green-500/10 animate-gradient" />
+        
+        {/* Floating Particles */}
+        <div className="absolute inset-0">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white/30 rounded-full animate-float"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 4}s`,
+                animationDuration: `${4 + Math.random() * 4}s`
+              }}
+            />
+          ))}
+        </div>
+      </div>
 
-.glass-button {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+      <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+        {/* Left Side - Content */}
+        <div className="text-center lg:text-left space-y-8 z-20">
+          <div className="space-y-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+              <span className="block">Premium</span>
+              <span className="block bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 bg-clip-text text-transparent">
+                Digital Solutions
+              </span>
+              <span className="block text-3xl md:text-4xl lg:text-5xl font-light text-white/90">
+                for Modern Business
+              </span>
+            </h1>
+            
+            <p className="text-xl text-white/70 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
+              We craft exceptional websites, mobile apps, and web applications that drive growth and deliver results. 
+              Experience the difference of working with true professionals.
+            </p>
+          </div>
 
-/* 3D Scroll Progress Bar */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #10b981);
-  transform-origin: left;
-  z-index: 9999;
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-}
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="group px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-white/90 transition-all duration-300 flex items-center justify-center space-x-2 hover:scale-105 shadow-lg hover:shadow-xl border-2 border-white"
+            >
+              <span>Get Started</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+            
+            <button
+              onClick={() => scrollToSection('services')}
+              className="group px-8 py-4 glass-button text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300 flex items-center justify-center space-x-2 hover:scale-105"
+            >
+              <span>View Services</span>
+            </button>
+          </div>
 
-/* Custom Animations */
-@keyframes float {
-  0%, 100% { 
-    transform: translateY(0px);
-    opacity: 0.3;
-  }
-  50% { 
-    transform: translateY(-20px);
-    opacity: 0.8;
-  }
-}
+          {/* Trust Indicators */}
+          <div className="flex flex-wrap justify-center lg:justify-start gap-8 pt-8">
+            {[
+              { icon: Zap, label: "Fast Delivery" },
+              { icon: Shield, label: "Secure & Reliable" },
+              { icon: Smartphone, label: "Mobile First" }
+            ].map((item, index) => (
+              <div key={index} className="flex items-center space-x-2 text-white/60">
+                <item.icon className="w-5 h-5" />
+                <span className="text-sm font-light">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
-@keyframes float-3d {
-  0%, 100% { 
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-  }
-  33% { 
-    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-  }
-  66% { 
-    transform: translateY(-5px) rotateX(-5deg) rotateY(-5deg);
-  }
-}
+        {/* Right Side - 3D Phone Mockup */}
+        <div className="relative lg:block hidden">
+          <div className="relative perspective-1000">
+            {/* Main Phone */}
+            <div 
+              className="relative w-80 h-96 mx-auto transform-3d transition-transform duration-700 hover:scale-105"
+              style={{
+                transform: `
+                  perspective(1000px)
+                  rotateX(${mousePosition.y * 10 - 5}deg)
+                  rotateY(${mousePosition.x * 10 - 5}deg)
+                  translateZ(20px)
+                `
+              }}
+            >
+              <div className="w-full h-full bg-gradient-to-b from-gray-800 to-black rounded-3xl border border-gray-600/50 shadow-2xl overflow-hidden">
+                {/* Screen */}
+                <div className="w-full h-5/6 bg-black rounded-t-3xl p-4 relative">
+                  <div className="w-full h-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl flex flex-col items-center justify-center space-y-4">
+                    <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center">
+                      <Smartphone className="w-8 h-8 text-white/80" />
+                    </div>
+                    <div className="text-center space-y-2">
+                      <div className="text-white/80 font-semibold">YOTS Tech</div>
+                      <div className="text-white/60 text-sm">Premium Apps</div>
+                    </div>
+                  </div>
+                  
+                  {/* Notch */}
+                  <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-20 h-6 bg-black rounded-full" />
+                </div>
+                
+                {/* Bottom Section */}
+                <div className="w-full h-1/6 bg-gradient-to-b from-gray-700 to-gray-900 rounded-b-3xl flex items-center justify-center">
+                  <div className="w-12 h-1 bg-white/30 rounded-full" />
+                </div>
+              </div>
+              
+              {/* Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl -z-10 animate-pulse-glow" />
+            </div>
+            
+            {/* Floating Elements */}
+            <div className="absolute top-10 -left-10 w-20 h-20 bg-blue-500/20 rounded-full blur-xl animate-float" />
+            <div className="absolute bottom-10 -right-10 w-16 h-16 bg-purple-500/20 rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }} />
+          </div>
+        </div>
 
-@keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-    opacity: 0.6;
-  }
-  50% { 
-    box-shadow: 0 0 40px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.3);
-    opacity: 1;
-  }
-}
+        {/* Mobile Phone Element - Subtle Background */}
+        <div className="lg:hidden absolute top-1/2 right-4 transform -translate-y-1/2 opacity-30 z-10">
+          <div className="w-40 h-48 bg-gradient-to-b from-gray-800/50 to-black/50 rounded-2xl border border-gray-600/30">
+            <div className="w-full h-5/6 bg-black/50 rounded-t-2xl p-3">
+              <div className="w-full h-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-xl flex items-center justify-center">
+                <Smartphone className="w-6 h-6 text-white/60" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-white/50 rounded-full mt-2 animate-pulse" />
+        </div>
+      </div>
+    </section>
+  );
+};
 
-/* Utility Classes */
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.animate-float-3d {
-  animation: float-3d 6s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
-}
-
-/* Glow Text Effect */
-.glow-text {
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3);
-}
-
-.glow-text-hover:hover {
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-  transition: text-shadow 0.3s ease-out;
-}
-
-/* 3D Transform Utilities */
-.transform-3d {
-  transform-style: preserve-3d;
-}
-
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.perspective-2000 {
-  perspective: 2000px;
-}
-
-/* Enhanced 3D Hover Effects */
-.hover\:translateZ-2:hover {
-  transform: translateZ(2px);
-}
-
-.hover\:translateZ-5:hover {
-  transform: translateZ(5px);
-}
-
-.hover\:scale-115:hover {
-  transform: scale(1.15);
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-}
-
-/* Selection Color */
-::selection {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
-}
-
-/* Focus Styles */
-input:focus, textarea:focus, button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
-}
-
-/* Smooth Transitions */
-.transition-smooth {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 3D Hover Effects */
-.hover-3d:hover {
-  transform: translateY(-3px) rotateX(5deg) rotateY(5deg) translateZ(15px);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hover-lift:hover {
-  transform: translateY(-4px) translateZ(10px);
-}
-
-.hover-rotate:hover {
-  transform: rotateY(10deg) rotateX(5deg) translateZ(20px);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* White Glow Effects */
-@keyframes white-glow {
-  0%, 100% { 
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    opacity: 0.6;
-  }
-  50% { 
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.6), 0 0 60px rgba(255, 255, 255, 0.3);
-    opacity: 1;
-  }
-}
-
-.animate-white-glow {
-  animation: white-glow 3s ease-in-out infinite;
-}
-
-.white-glow {
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4), 0 0 60px rgba(255, 255, 255, 0.2);
-}
-
-/* Loading States */
-@keyframes shimmer {
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
-}
-
-.animate-shimmer {
-  animation: shimmer 2s linear infinite;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  background-size: 200px 100%;
-}
-
-/* Cinematic Transitions */
-.cinematic-fade {
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.section-transition {
-  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
-  transition: background 1s ease-in-out;
-}
-
-/* Enhanced Parallax Effects */
-@keyframes float-smooth {
-  0%, 100% { 
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-  }
-  50% { 
-    transform: translateY(-15px) rotateX(2deg) rotateY(2deg);
-  }
-}
-
-.animate-float-smooth {
-  animation: float-smooth 6s ease-in-out infinite;
-}
-
-/* Typography Enhancements */
-.text-balance {
-  text-wrap: balance;
-}
-
-/* Hide elements */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* Responsive Design Helpers */
-@media (max-width: 768px) {
-  .glass-nav {
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-  }
-  
-  .glass-container {
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-  }
-}
-
-/* Parallax Layers */
-.parallax-slow {
-  transform: translateZ(-100px) scale(1.1);
-}
-
-.parallax-fast {
-  transform: translateZ(50px);
-}
-
-
-/* Performance Optimizations */
-.will-change-transform {
-  will-change: transform;
-}
-
-.will-change-opacity {
-  will-change: opacity;
-}
-
-/* Dark mode optimizations */
-@media (prefers-color-scheme: dark) {
-  .glass-nav {
-    background: rgba(0, 0, 0, 0.6);
-  }
-  
-  .glass-container {
-    background: rgba(255, 255, 255, 0.02);
-  }
-}
+export default Hero;

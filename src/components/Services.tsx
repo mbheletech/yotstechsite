@@ -1,358 +1,159 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+import React, { useEffect, useRef, useState } from 'react';
+import { Globe, Smartphone, Monitor, Palette, Code, Zap } from 'lucide-react';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+const Services = () => {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-* {
-  box-sizing: border-box;
-}
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.2 }
+    );
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-smooth: antialiased;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: smooth;
-  font-weight: 300;
-}
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
-/* Glassmorphism Components */
-.glass-nav {
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+    return () => observer.disconnect();
+  }, []);
 
-.glass-container {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+  const services = [
+    {
+      icon: Globe,
+      title: "Website Development",
+      description: "Custom websites built with modern technologies, optimized for performance and user experience.",
+      features: ["Responsive Design", "SEO Optimized", "Fast Loading", "CMS Integration"],
+      color: "from-blue-500 to-cyan-500"
+    },
+    {
+      icon: Smartphone,
+      title: "Mobile App Development",
+      description: "Native and cross-platform mobile applications that engage users and drive business growth.",
+      features: ["iOS & Android", "Cross-Platform", "App Store Ready", "Push Notifications"],
+      color: "from-green-500 to-emerald-500"
+    },
+    {
+      icon: Monitor,
+      title: "Web Applications",
+      description: "Powerful web applications with complex functionality, built for scalability and performance.",
+      features: ["Custom Features", "Database Integration", "API Development", "Cloud Hosting"],
+      color: "from-purple-500 to-pink-500"
+    },
+    {
+      icon: Palette,
+      title: "UI/UX Design",
+      description: "Beautiful, intuitive designs that create exceptional user experiences and drive conversions.",
+      features: ["User Research", "Wireframing", "Prototyping", "Design Systems"],
+      color: "from-orange-500 to-red-500"
+    },
+    {
+      icon: Code,
+      title: "Custom Development",
+      description: "Tailored solutions for unique business requirements using cutting-edge technologies.",
+      features: ["Custom Solutions", "API Integration", "Third-party Services", "Maintenance"],
+      color: "from-indigo-500 to-blue-500"
+    },
+    {
+      icon: Zap,
+      title: "Performance Optimization",
+      description: "Speed up your existing applications and improve user experience with our optimization services.",
+      features: ["Speed Optimization", "Code Review", "Database Tuning", "Monitoring"],
+      color: "from-yellow-500 to-orange-500"
+    }
+  ];
 
-.glass-button {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+  return (
+    <section id="services" ref={sectionRef} className="relative py-32 bg-gradient-to-b from-gray-900 to-black">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
 
-/* 3D Scroll Progress Bar */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #10b981);
-  transform-origin: left;
-  z-index: 9999;
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-}
+      <div className="relative max-w-7xl mx-auto px-6">
+        {/* Section Header */}
+        <div className="text-center mb-20">
+          <h2 className={`text-5xl md:text-6xl font-bold mb-8 transition-all duration-1000 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+          }`}>
+            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-green-400 bg-clip-text text-transparent">
+              Our Services
+            </span>
+          </h2>
+          <p className={`text-xl text-white/80 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+          }`}>
+            We deliver comprehensive digital solutions that transform your business and exceed expectations.
+          </p>
+        </div>
 
-/* Custom Animations */
-@keyframes float {
-  0%, 100% { 
-    transform: translateY(0px);
-    opacity: 0.3;
-  }
-  50% { 
-    transform: translateY(-20px);
-    opacity: 0.8;
-  }
-}
+        {/* Services Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className={`group relative transition-all duration-1000 ${
+                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+              }`}
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              {/* Card Background Glow */}
+              <div className={`absolute inset-0 bg-gradient-to-r ${service.color} rounded-3xl blur-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
+              
+              {/* Card */}
+              <div className="relative glass-container rounded-3xl p-8 h-full hover:scale-105 transition-all duration-500 border border-white/10 hover:border-white/20">
+                {/* Icon */}
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <service.icon className="w-8 h-8 text-white" />
+                </div>
 
-@keyframes float-3d {
-  0%, 100% { 
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-  }
-  33% { 
-    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-  }
-  66% { 
-    transform: translateY(-5px) rotateX(-5deg) rotateY(-5deg);
-  }
-}
+                {/* Content */}
+                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-blue-400 group-hover:to-purple-400 transition-all duration-300">
+                  {service.title}
+                </h3>
+                
+                <p className="text-white/70 mb-6 leading-relaxed">
+                  {service.description}
+                </p>
 
-@keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-    opacity: 0.6;
-  }
-  50% { 
-    box-shadow: 0 0 40px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.3);
-    opacity: 1;
-  }
-}
+                {/* Features */}
+                <div className="space-y-2">
+                  {service.features.map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-center space-x-2">
+                      <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color}`} />
+                      <span className="text-white/60 text-sm">{feature}</span>
+                    </div>
+                  ))}
+                </div>
 
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
+                {/* Hover Effect */}
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              </div>
+            </div>
+          ))}
+        </div>
 
-/* Utility Classes */
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
+        {/* Call to Action */}
+        <div className={`text-center mt-20 transition-all duration-1000 delay-1000 ${
+          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+        }`}>
+          <button 
+            onClick={() => {
+              const element = document.getElementById('contact');
+              if (element) element.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="group px-8 py-4 glass-button text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-105 border border-white/20 hover:border-white/40"
+          >
+            <span>Start Your Project</span>
+            <div className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</div>
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
 
-.animate-float-3d {
-  animation: float-3d 6s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
-}
-
-/* Glow Text Effect */
-.glow-text {
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3);
-}
-
-.glow-text-hover:hover {
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-  transition: text-shadow 0.3s ease-out;
-}
-
-/* 3D Transform Utilities */
-.transform-3d {
-  transform-style: preserve-3d;
-}
-
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.perspective-2000 {
-  perspective: 2000px;
-}
-
-/* Enhanced 3D Hover Effects */
-.hover\:translateZ-2:hover {
-  transform: translateZ(2px);
-}
-
-.hover\:translateZ-5:hover {
-  transform: translateZ(5px);
-}
-
-.hover\:scale-115:hover {
-  transform: scale(1.15);
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-}
-
-/* Selection Color */
-::selection {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
-}
-
-/* Focus Styles */
-input:focus, textarea:focus, button:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
-}
-
-/* Smooth Transitions */
-.transition-smooth {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* 3D Hover Effects */
-.hover-3d:hover {
-  transform: translateY(-3px) rotateX(5deg) rotateY(5deg) translateZ(15px);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.hover-lift:hover {
-  transform: translateY(-4px) translateZ(10px);
-}
-
-.hover-rotate:hover {
-  transform: rotateY(10deg) rotateX(5deg) translateZ(20px);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* White Glow Effects */
-
-/* Loading States */
-@keyframes shimmer {
-  0% {
-    background-position: -200px 0;
-  }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
-}
-
-.animate-shimmer {
-  animation: shimmer 2s linear infinite;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  background-size: 200px 100%;
-}
-
-/* Cinematic Transitions */
-.cinematic-fade {
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.section-transition {
-  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
-  transition: background 1s ease-in-out;
-}
-
-/* Enhanced Parallax Effects */
-@keyframes float-smooth {
-  0%, 100% { 
-    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
-  }
-  50% { 
-    transform: translateY(-15px) rotateX(2deg) rotateY(2deg);
-  }
-}
-
-.animate-float-smooth {
-}
-
-/* Typography Enhancements */
-.text-balance {
-  text-wrap: balance;
-}
-
-/* Hide elements */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* Responsive Design Helpers */
-@media (max-width: 768px) {
-  .glass-nav {
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-  }
-  
-  .glass-container {
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-  }
-}
-
-/* Parallax Layers */
-.parallax-slow {
-  transform: translateZ(-100px) scale(1.1);
-}
-
-.parallax-fast {
-  transform: translateZ(50px);
-}
-
-
-/* Performance Optimizations */
-.will-change-transform {
-  will-change: transform;
-}
-
-.will-change-opacity {
-  will-change: opacity;
-}
-
-/* ===== COMPREHENSIVE RESPONSIVE DESIGN ===== */
-
-/* Mobile First Approach - Base styles optimized for mobile */
-
-/* Extra Small Mobile (320px - 479px) */
-@media (max-width: 479px) {
-  /* Base Typography */
-  html { font-size: 14px; }
-  
-  /* Container Spacing */
-  .max-w-7xl { padding-left: 1rem; padding-right: 1rem; }
-  .max-w-6xl { padding-left: 1rem; padding-right: 1rem; }
-  
-  /* Section Spacing */
-  section { padding-top: 3rem; padding-bottom: 3rem; }
-  
-  /* Navigation Optimizations */
-  .glass-nav {
-    padding: 0.75rem 1rem;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    margin: 0.5rem;
-    width: calc(100% - 1rem);
-  }
-  
-  /* Typography Scaling */
-  .text-3xl { font-size: 1.5rem; line-height: 2rem; }
-  .text-4xl { font-size: 1.875rem; line-height: 2.25rem; }
-  .text-5xl { font-size: 2.25rem; line-height: 2.5rem; }
-  .text-6xl { font-size: 2.5rem; line-height: 1; }
-  
-  /* Button Optimizations */
-  button, .glass-button, .modern-button {
-    min-height: 44px;
-    min-width: 44px;
-    padding: 0.875rem 1.5rem;
-    font-size: 0.875rem;
-  }
-  
-  /* Grid Adjustments */
-  .grid { gap: 1rem; }
-  .md\:grid-cols-2, .md\:grid-cols-3, .md\:grid-cols-4 {
-    grid-template-columns: 1fr;
-  }
-  
-  /* 3D Effects Reduction for Performance */
-  .transform-3d { transform-style: flat; }
-  .perspective-1000, .perspective-2000, .perspective-3000 { perspective: none; }
-}
-
-/* Small Mobile (480px - 767px) */
-@media (min-width: 480px) and (max-width: 767px) {
-  html { font-size: 15px; }
-  
-  .max-w-7xl, .max-w-6xl { padding-left: 1.5rem; padding-right: 1.5rem; }
-  
-  section { padding-top: 4rem; padding-bottom: 4rem; }
-  
-  .glass-nav {
-    padding: 1rem 1.5rem;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    margin: 0.75rem;
-    width: calc(100% - 1.5rem);
-  }
-  
-  
+export default Services;
