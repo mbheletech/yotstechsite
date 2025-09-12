@@ -1,81 +1,90 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Instagram, Linkedin, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="relative bg-black/90 backdrop-blur-sm border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">Y</span>
+    <footer className="relative bg-gradient-to-t from-gray-900 to-black py-16 border-t border-white/10">
+      <div className="relative max-w-7xl mx-auto px-6">
+        {/* Main Footer Content */}
+        <div className="grid md:grid-cols-4 gap-12 mb-12">
+          {/* Brand */}
+          <div className="md:col-span-2 space-y-6">
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/src/assets/Copilot_20250912_185659-removebg-preview.png" 
+                alt="YOTS Tech Logo" 
+                className="h-8 w-auto object-contain filter brightness-0 invert"
+              />
+              <div className="text-2xl font-thin tracking-wide text-white">
+                YOTS<span className="font-light">Tech</span>
               </div>
-              <span className="text-2xl font-bold text-white">YOTSTech</span>
             </div>
-            <p className="text-gray-300 text-lg mb-6 max-w-md">
-              Transforming businesses through innovative technology solutions. 
-              We deliver cutting-edge software development and digital transformation services.
+            <p className="text-white/60 leading-relaxed max-w-md font-light tracking-wide">
+              Excellence in Digital Solutions. We build world-class websites, mobile apps, and web applications for businesses that demand the best.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="glass-button p-3 text-white hover:text-blue-400 transition-colors">
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="glass-button p-3 text-white hover:text-blue-400 transition-colors">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="glass-button p-3 text-white hover:text-pink-400 transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="glass-button p-3 text-white hover:text-blue-600 transition-colors">
-                <Linkedin className="w-5 h-5" />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h3 className="text-white text-lg font-semibold mb-6">Quick Links</h3>
+          <div className="space-y-6">
+            <h4 className="text-lg font-light text-white tracking-wide">Quick Links</h4>
             <div className="space-y-3">
-              <a href="#home" className="block text-gray-300 hover:text-white transition-colors">Home</a>
-              <a href="#services" className="block text-gray-300 hover:text-white transition-colors">Services</a>
-              <a href="#pricing" className="block text-gray-300 hover:text-white transition-colors">Pricing</a>
-              <a href="#contact" className="block text-gray-300 hover:text-white transition-colors">Contact</a>
+              {['Home', 'About', 'Services', 'Pricing', 'Contact'].map((link) => (
+                <a
+                  key={link}
+                  href={`#${link.toLowerCase()}`}
+                  className="block text-white/60 hover:text-white hover:translate-x-1 transition-all duration-300 font-light tracking-wide text-sm"
+                >
+                  {link}
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-white text-lg font-semibold mb-6">Contact Info</h3>
+          {/* Services */}
+          <div className="space-y-6">
+            <h4 className="text-lg font-light text-white tracking-wide">Services</h4>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3 text-gray-300">
-                <Mail className="w-4 h-4" />
-                <span className="text-sm">info@yotstech.com</span>
-              </div>
-              <div className="flex items-center space-x-3 text-gray-300">
-                <Phone className="w-4 h-4" />
-                <span className="text-sm">+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center space-x-3 text-gray-300">
-                <MapPin className="w-4 h-4" />
-                <span className="text-sm">123 Tech Street, Digital City</span>
-              </div>
+              {['Web Development', 'Mobile Apps', 'Web Applications', 'UI/UX Design'].map((service) => (
+                <div key={service} className="text-white/60 font-light text-sm tracking-wide">
+                  {service}
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-white/10 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400 text-sm">
-              © 2024 YOTSTech. All rights reserved.
+        {/* Divider */}
+        <div className="border-t border-white/10 mb-8" />
+
+        {/* Bottom Footer */}
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+          {/* Copyright */}
+          <div className="text-center md:text-left">
+            <p className="text-white/60 font-light tracking-wide text-sm">
+              © 2025 YOTS Tech Developers — Excellence in Digital Solutions.
             </p>
-            <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">Cookie Policy</a>
-            </div>
+          </div>
+
+          {/* Social Media */}
+          <div className="flex items-center space-x-4">
+            <a
+              href="#"
+              className="group p-3 glass-button rounded-full border border-white/10 hover:border-pink-500/50 transition-all duration-300 hover:scale-110"
+            >
+              <Instagram className="w-4 h-4 text-white/60 group-hover:text-pink-400 transition-colors duration-300" />
+            </a>
+            <a
+              href="#"
+              className="group p-3 glass-button rounded-full border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:scale-110"
+            >
+              <Linkedin className="w-4 h-4 text-white/60 group-hover:text-blue-400 transition-colors duration-300" />
+            </a>
+            <a
+              href="https://wa.me/27123456789"
+              className="group p-3 glass-button rounded-full border border-white/10 hover:border-green-500/50 transition-all duration-300 hover:scale-110"
+            >
+              <MessageCircle className="w-4 h-4 text-white/60 group-hover:text-green-400 transition-colors duration-300" />
+            </a>
           </div>
         </div>
       </div>
