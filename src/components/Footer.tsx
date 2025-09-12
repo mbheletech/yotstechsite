@@ -1,162 +1,90 @@
 import React from 'react';
-import { Zap, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Instagram, Linkedin, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <footer className="bg-gray-900 border-t border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Zap className="h-8 w-8 text-blue-400" />
-              <span className="text-xl font-bold text-white">YotsTech</span>
+    <footer className="relative bg-gradient-to-t from-gray-900 to-black py-16 border-t border-white/10">
+      <div className="relative max-w-7xl mx-auto px-6">
+        {/* Main Footer Content */}
+        <div className="grid md:grid-cols-4 gap-12 mb-12">
+          {/* Brand */}
+          <div className="md:col-span-2 space-y-6">
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/src/assets/Copilot_20250912_185659-removebg-preview.png" 
+                alt="YOTS Tech Logo" 
+                className="h-8 w-auto object-contain filter brightness-0 invert"
+              />
+              <div className="text-2xl font-thin tracking-wide text-white">
+                YOTS<span className="font-light">Tech</span>
+              </div>
             </div>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Transforming digital visions into reality with cutting-edge mobile apps, 
-              stunning websites, and innovative digital solutions.
+            <p className="text-white/60 leading-relaxed max-w-md font-light tracking-wide">
+              Excellence in Digital Solutions. We build world-class websites, mobile apps, and web applications for businesses that demand the best.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors duration-200">
-                <Linkedin className="h-5 w-5" />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <button
-                  onClick={() => scrollToSection('home')}
-                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
+          <div className="space-y-6">
+            <h4 className="text-lg font-light text-white tracking-wide">Quick Links</h4>
+            <div className="space-y-3">
+              {['Home', 'About', 'Services', 'Pricing', 'Contact'].map((link) => (
+                <a
+                  key={link}
+                  href={`#${link.toLowerCase()}`}
+                  className="block text-white/60 hover:text-white hover:translate-x-1 transition-all duration-300 font-light tracking-wide text-sm"
                 >
-                  Home
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection('about')}
-                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
-                >
-                  About
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection('services')}
-                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
-                >
-                  Services
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection('portfolio')}
-                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
-                >
-                  Portfolio
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToSection('pricing')}
-                  className="text-gray-400 hover:text-white transition-colors duration-200 text-sm"
-                >
-                  Pricing
-                </button>
-              </li>
-            </ul>
+                  {link}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Services */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">Services</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                  Mobile App Development
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                  Web Development
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                  UI/UX Design
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                  Digital Marketing
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                  Consulting
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">Contact Info</h3>
+          <div className="space-y-6">
+            <h4 className="text-lg font-light text-white tracking-wide">Services</h4>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                <span className="text-gray-400 text-sm">hello@yotstech.com</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                <span className="text-gray-400 text-sm">+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <MapPin className="h-4 w-4 text-blue-400 flex-shrink-0" />
-                <span className="text-gray-400 text-sm">San Francisco, CA</span>
-              </div>
+              {['Web Development', 'Mobile Apps', 'Web Applications', 'UI/UX Design'].map((service) => (
+                <div key={service} className="text-white/60 font-light text-sm tracking-wide">
+                  {service}
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400 text-sm">
-              © {currentYear} YotsTech. All rights reserved.
+        {/* Divider */}
+        <div className="border-t border-white/10 mb-8" />
+
+        {/* Bottom Footer */}
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+          {/* Copyright */}
+          <div className="text-center md:text-left">
+            <p className="text-white/60 font-light tracking-wide text-sm">
+              © 2025 YOTS Tech Developers — Excellence in Digital Solutions.
             </p>
-            <div className="flex space-x-6">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                Terms of Service
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 text-sm">
-                Cookie Policy
-              </a>
-            </div>
+          </div>
+
+          {/* Social Media */}
+          <div className="flex items-center space-x-4">
+            <a
+              href="#"
+              className="group p-3 glass-button rounded-full border border-white/10 hover:border-pink-500/50 transition-all duration-300 hover:scale-110"
+            >
+              <Instagram className="w-4 h-4 text-white/60 group-hover:text-pink-400 transition-colors duration-300" />
+            </a>
+            <a
+              href="#"
+              className="group p-3 glass-button rounded-full border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:scale-110"
+            >
+              <Linkedin className="w-4 h-4 text-white/60 group-hover:text-blue-400 transition-colors duration-300" />
+            </a>
+            <a
+              href="https://wa.me/27123456789"
+              className="group p-3 glass-button rounded-full border border-white/10 hover:border-green-500/50 transition-all duration-300 hover:scale-110"
+            >
+              <MessageCircle className="w-4 h-4 text-white/60 group-hover:text-green-400 transition-colors duration-300" />
+            </a>
           </div>
         </div>
       </div>
