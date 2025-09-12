@@ -1,235 +1,358 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Monitor, Smartphone, Globe } from 'lucide-react';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-const Services = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [hoveredService, setHoveredService] = useState<number | null>(null);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
+* {
+  box-sizing: border-box;
+}
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { threshold: 0.2 }
-    );
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-smooth: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  font-weight: 300;
+}
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+/* Glassmorphism Components */
+.glass-nav {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-    window.addEventListener('scroll', handleScroll);
+.glass-container {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+.glass-button {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-  const services = [
-    {
-      icon: Monitor,
-      title: "Websites",
-      description: "Modern, responsive websites that captivate and convert",
-      features: ["Responsive Design", "SEO Optimized", "Lightning Fast", "CMS Integration"]
-    },
-    {
-      icon: Smartphone,
-      title: "Mobile Apps",
-      description: "iOS and Android apps built with precision and purpose",
-      features: ["Cross-Platform", "Native Performance", "App Store Ready", "Push Notifications"]
-    },
-    {
-      icon: Globe,
-      title: "Web Apps",
-      description: "Scalable and interactive platforms that grow with your business",
-      features: ["Cloud-Based", "Real-Time Updates", "API Integration", "Advanced Analytics"]
-    }
-  ];
+/* 3D Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #10b981);
+  transform-origin: left;
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
 
-  return (
-    <section 
-      id="services" 
-      ref={sectionRef} 
-      className="relative py-32 overflow-hidden"
-      style={{
-        background: `
-          radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.06) 0%, transparent 60%),
-          radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
-          linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #000000 100%)
-        `,
-        transform: `
-          perspective(2000px)
-          rotateX(${Math.sin(scrollY * 0.0008) * 1.5}deg)
-          translateZ(${scrollY * -0.1}px)
-        `,
-        transformStyle: 'preserve-3d'
-      }}
-    >
-      {/* Enhanced 3D Background Elements with Parallax */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Floating Code Lines */}
-        <div 
-          className="absolute inset-0 opacity-8 parallax-slow"
-          style={{
-            transform: `translateY(${scrollY * 0.03}px) translateZ(-300px) rotateZ(${scrollY * 0.01}deg)`,
-            background: `
-              repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 180px,
-                rgba(255, 255, 255, 0.12) 181px,
-                rgba(255, 255, 255, 0.12) 182px
-              )
-            `
-          }}
-        />
-        
-        {/* 3D Service Icons Background */}
-        {services.map((_, index) => (
-          <div
-            key={index}
-            className="absolute w-40 h-40 opacity-8 animate-parallax-float"
-            style={{
-              left: `${15 + index * 30}%`,
-              top: `${25 + index * 20}%`,
-              transform: `
-                translateZ(${-200 + Math.sin(scrollY * 0.002 + index) * 100}px)
-                rotateX(${scrollY * 0.06 + index * 30}deg)
-                rotateY(${scrollY * 0.04 + index * 45}deg)
-                translateY(${Math.sin(scrollY * 0.003 + index) * 50}px)
-              `
-            }}
-          >
-            <div className="w-full h-full bg-white/15 rounded-3xl blur-lg animate-white-glow" />
-          </div>
-        ))}
-      </div>
+/* Custom Animations */
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translateY(-20px);
+    opacity: 0.8;
+  }
+}
 
-      <div className="relative max-w-7xl mx-auto px-6">
-        <div className="text-center mb-20">
-          <h2 
-            className={`text-4xl md:text-6xl font-thin text-white mb-8 tracking-tight transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-          }`}
-            style={{
-              transform: `
-                translateY(${isVisible ? 0 : 30}px)
-                translateZ(${isVisible ? 80 : 0}px)
-                rotateX(${Math.sin(scrollY * 0.002) * 2}deg)
-                rotateY(${Math.cos(scrollY * 0.0015) * 1}deg)
-              `
-            }}
-          >
-            Our <span className="font-light text-white animate-white-glow">Services</span>
-          </h2>
-          <p 
-            className={`text-lg text-white/60 max-w-3xl mx-auto font-light tracking-wide transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-          }`}
-            style={{
-              transform: `
-                translateY(${isVisible ? 0 : 25}px)
-                translateZ(${isVisible ? 50 : -50}px)
-                rotateX(${Math.sin(scrollY * 0.0025) * 1.5}deg)
-              `
-            }}
-          >
-            From concept to deployment, we deliver digital solutions that exceed expectations.
-          </p>
-        </div>
+@keyframes float-3d {
+  0%, 100% { 
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  33% { 
+    transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+  }
+  66% { 
+    transform: translateY(-5px) rotateX(-5deg) rotateY(-5deg);
+  }
+}
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              onMouseEnter={() => setHoveredService(index)}
-              onMouseLeave={() => setHoveredService(null)}
-              className={`group transition-all duration-1000 ${
-                index === 0 ? 'delay-600' : index === 1 ? 'delay-800' : 'delay-1000'
-              } ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'} transform-3d`}
-              style={{
-                transform: `
-                  translateY(${isVisible ? 0 : 30}px)
-                  translateZ(${isVisible ? (hoveredService === index ? 120 : 40) : -80}px)
-                  rotateX(${hoveredService === index ? -12 : Math.sin(scrollY * 0.0015 + index) * 4}deg)
-                  rotateY(${hoveredService === index ? 12 : Math.cos(scrollY * 0.0015 + index) * 4}deg)
-                  scale(${hoveredService === index ? 1.12 : 1})
-                `,
-                transition: 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
-              }}
-            >
-              <div className="relative glass-container rounded-3xl p-8 border border-white/10 transition-all duration-700 hover:border-white/40 hover:shadow-white/20 hover:shadow-3xl group transform-3d white-glow">
-                {/* 3D Floating Icon */}
-                <div className="relative mb-8 perspective-2000">
-                  <div 
-                    className="w-24 h-24 mx-auto glass-button rounded-2xl flex items-center justify-center transition-all duration-500 transform-3d hover-rotate"
-                    style={{
-                      transform: `
-                        rotateX(${hoveredService === index ? 25 : Math.sin(scrollY * 0.003 + index) * 10}deg)
-                        rotateY(${hoveredService === index ? -25 : Math.cos(scrollY * 0.0025 + index) * 10}deg)
-                        translateZ(${hoveredService === index ? 40 : 0}px)
-                        scale(${hoveredService === index ? 1.15 : 1})
-                      `
-                    }}
-                  >
-                    <service.icon className="text-white w-12 h-12 animate-white-glow" />
-                    {/* White Icon Glow */}
-                    <div className={`absolute inset-0 bg-white/30 rounded-2xl blur-xl transition-opacity duration-700 ${
-                      hoveredService === index ? 'opacity-100' : 'opacity-0'
-                    }`} />
-                  </div>
-                </div>
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    opacity: 0.6;
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.6), 0 0 60px rgba(59, 130, 246, 0.3);
+    opacity: 1;
+  }
+}
 
-                <div className="text-center space-y-6">
-                  <h3 className="text-2xl font-light text-white tracking-wide glow-text">
-                    {service.title}
-                  </h3>
-                  <p className="text-white/70 font-light leading-relaxed tracking-wide">
-                    {service.description}
-                  </p>
-                  
-                  {/* Feature List */}
-                  <div className="space-y-3 pt-4">
-                    {service.features.map((feature, featureIndex) => (
-                      <div 
-                        key={featureIndex}
-                        className={`flex items-center justify-center space-x-3 transition-colors duration-300 ${
-                          hoveredService === index ? 'text-white/90' : 'text-white/60'
-                        }`}
-                        style={{
-                          transform: `translateZ(${hoveredService === index ? 15 : 0}px) rotateX(${hoveredService === index ? 5 : 0}deg)`,
-                          transition: `transform 0.4s ease-out ${featureIndex * 0.1}s`
-                        }}
-                      >
-                        <div className="w-1 h-1 bg-white rounded-full animate-white-glow" />
-                        <span className="text-sm font-light tracking-wide">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
 
-                {/* Hover Glow Effect */}
-                <div className={`absolute inset-0 bg-white/8 rounded-3xl transition-opacity duration-700 ${
-                  hoveredService === index ? 'opacity-100' : 'opacity-0'
-                }`} />
-                
-                {/* Enhanced Border Glow */}
-                <div className={`absolute inset-0 rounded-3xl transition-all duration-700 ${
-                  hoveredService === index ? 'shadow-white/30 shadow-3xl' : ''
-                }`} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
+/* Utility Classes */
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
 
-export default Services;
+.animate-float-3d {
+  animation: float-3d 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Glow Text Effect */
+.glow-text {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+.glow-text-hover:hover {
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  transition: text-shadow 0.3s ease-out;
+}
+
+/* 3D Transform Utilities */
+.transform-3d {
+  transform-style: preserve-3d;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+/* Enhanced 3D Hover Effects */
+.hover\:translateZ-2:hover {
+  transform: translateZ(2px);
+}
+
+.hover\:translateZ-5:hover {
+  transform: translateZ(5px);
+}
+
+.hover\:scale-115:hover {
+  transform: scale(1.15);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+/* Selection Color */
+::selection {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Focus Styles */
+input:focus, textarea:focus, button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Smooth Transitions */
+.transition-smooth {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 3D Hover Effects */
+.hover-3d:hover {
+  transform: translateY(-3px) rotateX(5deg) rotateY(5deg) translateZ(15px);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px) translateZ(10px);
+}
+
+.hover-rotate:hover {
+  transform: rotateY(10deg) rotateX(5deg) translateZ(20px);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* White Glow Effects */
+
+/* Loading States */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background-size: 200px 100%;
+}
+
+/* Cinematic Transitions */
+.cinematic-fade {
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.section-transition {
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
+  transition: background 1s ease-in-out;
+}
+
+/* Enhanced Parallax Effects */
+@keyframes float-smooth {
+  0%, 100% { 
+    transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+  }
+  50% { 
+    transform: translateY(-15px) rotateX(2deg) rotateY(2deg);
+  }
+}
+
+.animate-float-smooth {
+}
+
+/* Typography Enhancements */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Hide elements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Responsive Design Helpers */
+@media (max-width: 768px) {
+  .glass-nav {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+  
+  .glass-container {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+}
+
+/* Parallax Layers */
+.parallax-slow {
+  transform: translateZ(-100px) scale(1.1);
+}
+
+.parallax-fast {
+  transform: translateZ(50px);
+}
+
+
+/* Performance Optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* ===== COMPREHENSIVE RESPONSIVE DESIGN ===== */
+
+/* Mobile First Approach - Base styles optimized for mobile */
+
+/* Extra Small Mobile (320px - 479px) */
+@media (max-width: 479px) {
+  /* Base Typography */
+  html { font-size: 14px; }
+  
+  /* Container Spacing */
+  .max-w-7xl { padding-left: 1rem; padding-right: 1rem; }
+  .max-w-6xl { padding-left: 1rem; padding-right: 1rem; }
+  
+  /* Section Spacing */
+  section { padding-top: 3rem; padding-bottom: 3rem; }
+  
+  /* Navigation Optimizations */
+  .glass-nav {
+    padding: 0.75rem 1rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    margin: 0.5rem;
+    width: calc(100% - 1rem);
+  }
+  
+  /* Typography Scaling */
+  .text-3xl { font-size: 1.5rem; line-height: 2rem; }
+  .text-4xl { font-size: 1.875rem; line-height: 2.25rem; }
+  .text-5xl { font-size: 2.25rem; line-height: 2.5rem; }
+  .text-6xl { font-size: 2.5rem; line-height: 1; }
+  
+  /* Button Optimizations */
+  button, .glass-button, .modern-button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+  }
+  
+  /* Grid Adjustments */
+  .grid { gap: 1rem; }
+  .md\:grid-cols-2, .md\:grid-cols-3, .md\:grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  /* 3D Effects Reduction for Performance */
+  .transform-3d { transform-style: flat; }
+  .perspective-1000, .perspective-2000, .perspective-3000 { perspective: none; }
+}
+
+/* Small Mobile (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  html { font-size: 15px; }
+  
+  .max-w-7xl, .max-w-6xl { padding-left: 1.5rem; padding-right: 1.5rem; }
+  
+  section { padding-top: 4rem; padding-bottom: 4rem; }
+  
+  .glass-nav {
+    padding: 1rem 1.5rem;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    margin: 0.75rem;
+    width: calc(100% - 1.5rem);
+  }
+  
+  
