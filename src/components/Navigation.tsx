@@ -71,20 +71,6 @@ const Navigation = () => {
                   {item.name}
                 </a>
               ))}
-              
-              {/* Mobile Logo - Bottom of menu */}
-              <div className="pt-4 mt-4 border-t border-white/10">
-                <div className="flex items-center justify-center space-x-3 px-4 py-2">
-                  <img 
-                    src="/src/assets/Copilot_20250912_185659-removebg-preview.png" 
-                    alt="YOTS Tech Logo" 
-                    className="h-6 w-auto object-contain filter brightness-0 invert opacity-70"
-                  />
-                  <span className="text-white/70 font-thin text-sm tracking-wider">
-                    YOTS<span className="font-light">Tech</span>
-                  </span>
-                </div>
-              </div>
             </div>
           </div>
 
