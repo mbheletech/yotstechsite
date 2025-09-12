@@ -333,3 +333,5 @@ input:focus, textarea:focus, button:focus {
   .glass-nav {
     padding: 0.75rem 1rem;
     backdrop-filter: blur(10px);
+  }
+}
