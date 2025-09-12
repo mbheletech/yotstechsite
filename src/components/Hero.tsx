@@ -140,7 +140,7 @@ const Hero = () => {
 
       {/* Enhanced 3D iPhone with Dynamic Uplight Effect */}
       <div 
-        className="absolute right-8 md:right-20 top-1/2 transform -translate-y-1/2 z-20 group perspective-3000"
+        className="absolute right-4 md:right-20 top-1/2 transform -translate-y-1/2 z-10 md:z-20 group perspective-3000 opacity-30 md:opacity-100"
         style={phoneTransform}
       >
         {/* Dynamic Uplight Effect */}
@@ -158,7 +158,7 @@ const Hero = () => {
           }}
         />
         
-        <div className={`relative w-56 h-[480px] transform-3d transition-all duration-700 ${isMouseNearPhone ? 'scale-110 white-glow' : ''}`}>
+        <div className={`relative w-40 md:w-56 h-[320px] md:h-[480px] transform-3d transition-all duration-700 ${isMouseNearPhone ? 'scale-110 white-glow' : ''}`}>
           {/* iPhone Body with Enhanced Realism and Hover Effects */}
           <div className={`absolute inset-0 bg-gradient-to-b from-gray-800 via-black to-gray-800 rounded-[3rem] shadow-2xl transition-all duration-700 ${isMouseNearPhone ? 'shadow-white/20 shadow-3xl border-transparent' : 'border-transparent'}`}>
             {/* Dynamic Notch */}
@@ -239,31 +239,31 @@ const Hero = () => {
       </div>
 
       {/* Main Content - Left Side */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center min-h-screen">
+      <div className="relative z-20 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center min-h-screen">
         <div 
-          className="space-y-8"
+          className="space-y-8 text-center lg:text-left"
           style={{
             transform: `translateZ(${30 + scrollY * -0.03}px) translateY(${scrollY * 0.08}px) rotateX(${scrollY * 0.005}deg)`
           }}
         >
           {/* Enhanced Headlines */}
           <div 
-            className="space-y-6"
+            className="space-y-4 md:space-y-6"
             style={{
               transform: `translateZ(${50 + scrollY * -0.08}px) rotateX(${scrollY * 0.006}deg) rotateY(${scrollY * 0.002}deg)`
             }}
           >
-            <h1 className="text-4xl md:text-6xl font-thin leading-tight tracking-tight text-white glow-text">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-thin leading-tight tracking-tight text-white glow-text drop-shadow-2xl">
               Building World-Class
             </h1>
-            <h2 className="text-5xl md:text-7xl font-light text-white glow-text animate-white-glow">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-light text-white glow-text animate-white-glow drop-shadow-2xl">
               Digital Solutions
             </h2>
           </div>
 
           {/* Enhanced Subtext */}
           <p 
-            className="text-lg md:text-xl text-white/80 max-w-2xl font-thin leading-relaxed tracking-wide"
+            className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto lg:mx-0 font-thin leading-relaxed tracking-wide drop-shadow-lg"
             style={{
               transform: `translateZ(${35 + scrollY * -0.06}px) rotateX(${scrollY * 0.003}deg)`
             }}
@@ -273,17 +273,17 @@ const Hero = () => {
 
           {/* Enhanced CTA Button */}
           <div 
-            className="pt-4"
+            className="pt-6 md:pt-4"
             style={{
               transform: `translateZ(${40 + scrollY * -0.05}px) rotateX(${scrollY * 0.004}deg)`
             }}
           >
             <button 
               onClick={handleGetStartedClick}
-              className="group relative px-12 py-5 text-lg font-thin bg-black text-white hover:bg-white hover:text-black rounded-full overflow-hidden transform transition-all duration-700 hover:scale-115 hover-3d border border-white/30 glass-button hover:shadow-white/30 hover:shadow-3xl white-glow cursor-pointer"
+              className="group relative px-8 sm:px-12 py-4 sm:py-5 text-base sm:text-lg font-thin bg-white text-black hover:bg-black hover:text-white rounded-full overflow-hidden transform transition-all duration-700 hover:scale-115 hover-3d border-2 border-white shadow-2xl hover:shadow-white/30 hover:shadow-3xl white-glow cursor-pointer"
             >
               <span className="relative z-10 tracking-wider">Get Started</span>
-              <div className="absolute inset-0 bg-white/15 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700" />
+              <div className="absolute inset-0 bg-black/15 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700" />
             </button>
           </div>
         </div>
