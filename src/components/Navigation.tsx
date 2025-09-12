@@ -648,6 +648,8 @@ input:focus, textarea:focus, button:focus {
   .glass-container {
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.1);
+  }
+}
 
 /* Responsive Spacing Utilities */
 .space-responsive { gap: clamp(1rem, 3vw, 2rem); }
@@ -685,3 +687,5 @@ input:focus, textarea:focus, button:focus {
   .glass-nav {
     padding: 0.75rem 1rem;
     backdrop-filter: blur(10px);
+  }
+}
